@@ -1,5 +1,6 @@
+# sudo chmod 755 /home/ec2-user
 # sudo chmod 755 /home/ec2-user/MERN-E-Commerce-Store
-# sudo chmod -R 755 /home/ec2-user/MERN-E-Commerce-Store/frontend/dist
+# sudo chmod -R 755 /home/ec2-user/MERN-DevOps/frontend/dist
 # sudo nano /etc/nginx/conf.d/ecommerce.conf
 
 server {
@@ -7,7 +8,7 @@ server {
     server_name <your-ec2-public-ip>;
 
     location / {
-        root /home/ec2-user/MERN-E-Commerce-Store/frontend/dist;
+        root /home/ec2-user/MERN-DevOps/frontend/dist;
         index index.html;
         try_files $uri /index.html;
     }
