@@ -42,7 +42,7 @@ pipeline {
         stage('Lint frontend') {
             steps {
                 dir('frontend') {
-                    sh 'npm run lint'
+                    sh 'npm run lint -- --max-warnings 100'
                 }
             }
         }
