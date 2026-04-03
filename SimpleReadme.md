@@ -51,7 +51,7 @@ sudo systemctl enable mongod
 
 ```bash
 # Root
-cd ~/MERN-E-Commerce-Store
+cd ~/MERN-DevOps
 npm install
 
 # Backend
@@ -66,7 +66,7 @@ cd frontend && npm install && cd ..
 ### Step 6 — Build the Frontend
 
 ```bash
-cd ~/MERN-E-Commerce-Store/frontend
+cd ~/MERN-DevOps/frontend
 npm run build
 ```
 
@@ -76,7 +76,7 @@ npm run build
 
 ```bash
 npm install -g pm2
-cd ~/MERN-E-Commerce-Store/backend
+cd ~/MERN-DevOps/backend
 pm2 start index.js --name "backend"
 pm2 save
 pm2 startup
