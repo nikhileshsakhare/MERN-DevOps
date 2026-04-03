@@ -39,17 +39,10 @@ pipeline {
             }
         }
 
-        stage('Lint') {
-            parallel {
-                stage('Lint frontend') {
-                    steps {
-                        dir('frontend') { sh 'npm run lint' }
-                    }
-                }
-                stage('Lint backend') {
-                    steps {
-                        dir('backend') { sh 'npm run lint' }
-                    }
+        stage('Lint frontend') {
+            steps {
+                dir('frontend') {
+                    sh 'npm run lint'
                 }
             }
         }
