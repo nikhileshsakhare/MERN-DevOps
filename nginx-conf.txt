@@ -1,5 +1,5 @@
 # sudo chmod 755 /home/ec2-user
-# sudo chmod 755 /home/ec2-user/MERN-E-Commerce-Store
+# sudo chmod 755 /home/ec2-user/MERN-DevOps
 # sudo chmod -R 755 /home/ec2-user/MERN-DevOps/frontend/dist
 # sudo nano /etc/nginx/conf.d/ecommerce.conf
 
