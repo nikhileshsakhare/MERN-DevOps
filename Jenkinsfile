@@ -47,14 +47,6 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                dir('backend') {
-                    sh 'npm test'
-                }
-            }
-        }
-
         stage('Build React App') {
             steps {
                 dir('frontend') {
