@@ -73,6 +73,23 @@ pipeline {
                 '''
             }
         }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh '''
+                    sed -i "s|$IMAGE_NAME-frontend:latest|$IMAGE_NAME-frontend:$BUILD_NUMBER|g" K8s/client/deployment.yaml
+                    sed -i "s|$IMAGE_NAME-backend:latest|$IMAGE_NAME-backend:$BUILD_NUMBER|g" K8s/server/deployment.yaml
+
+                    kubectl apply -f K8s/namespace.yaml
+                    kubectl apply -f K8s/mongo/
+                    kubectl apply -f K8s/server/
+                    kubectl apply -f K8s/client/
+
+                    kubectl rollout status deployment/server -n mern-app
+                    kubectl rollout status deployment/client -n mern-app
+                '''
+            }
+        }
     }
 
     post {
