@@ -4,7 +4,7 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 WORKDIR /app
 COPY package*.json ./
 RUN npm install --omit=dev
-COPY . .
+COPY backend/ .
 # Switch to non-root user
 USER appuser
 EXPOSE 5000
