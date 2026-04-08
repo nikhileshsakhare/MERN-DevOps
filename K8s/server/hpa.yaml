@@ -1,0 +1,38 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: server-hpa
+  namespace: mern-app
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: server
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70   # Scale up when avg CPU > 70%
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80   # Scale up when avg memory > 80%
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 30    # Wait 30s before scaling up again
+      policies:
+        - type: Pods
+          value: 2                      # Add max 2 pods at a time
+          periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300   # Wait 5 mins before scaling down
+      policies:
+        - type: Pods
+          value: 1                      # Remove max 1 pod at a time
+          periodSeconds: 60
