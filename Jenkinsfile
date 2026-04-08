@@ -81,6 +81,7 @@ pipeline {
                     sed -i "s|$IMAGE_NAME-backend:latest|$IMAGE_NAME-backend:$BUILD_NUMBER|g" K8s/server/deployment.yaml
 
                     kubectl apply -f K8s/namespace.yaml
+                    kubectl apply -f K8s/secrets.yaml
                     kubectl apply -f K8s/mongo/
                     kubectl apply -f K8s/server/
                     kubectl apply -f K8s/client/
