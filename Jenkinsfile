@@ -59,7 +59,7 @@ pipeline {
             steps {
                 sh '''
                     docker build -t $IMAGE_NAME-frontend:$BUILD_NUMBER ./frontend
-                    docker build -t $IMAGE_NAME-backend:$BUILD_NUMBER ./backend
+                    docker build -t $IMAGE_NAME-backend:$BUILD_NUMBER -f backend/Dockerfile .
                 '''
             }
         }
