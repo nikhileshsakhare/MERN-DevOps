@@ -6,9 +6,9 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
-    - host: mern-app.local
-      http:
+    - http:
         paths:
           - path: /
             pathType: Prefix
