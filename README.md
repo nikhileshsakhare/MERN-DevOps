@@ -1,6 +1,6 @@
-# MERN DevOps — Full-Stack E-Commerce on Kubernetes
+# MERN DevOps - Full-Stack E-Commerce on Kubernetes
 
-> A production-style DevOps pipeline for a MERN e-commerce application — containerised with Docker, orchestrated with Kubernetes (Minikube), and delivered through a Jenkins CI/CD pipeline on AWS EC2.
+> A production-style DevOps pipeline for a MERN e-commerce application - containerised with Docker, orchestrated with Kubernetes (Minikube), and delivered through a Jenkins CI/CD pipeline on AWS EC2.
 
 **Application forked from:** [HuXn-WebDev/MERN-E-Commerce-Store](https://github.com/HuXn-WebDev/MERN-E-Commerce-Store)
 
@@ -11,7 +11,7 @@
 The application is a full-stack MERN e-commerce store. This repository adds a complete DevOps layer on top of it:
 
 - **Dockerised** frontend (React + nginx) and backend (Node.js + Express)
-- **Kubernetes manifests** for all three tiers — frontend, backend, and MongoDB
+- **Kubernetes manifests** for all three tiers - frontend, backend, and MongoDB
 - **Horizontal Pod Autoscalers** on both the frontend and backend
 - **Jenkins CI/CD pipeline** that builds, pushes, and deploys on every git push
 - **AWS EC2** as the single host running Jenkins (in Docker) and Minikube side-by-side
@@ -21,36 +21,7 @@ The application is a full-stack MERN e-commerce store. This repository adds a co
 
 ## Architecture
 
-```
-Developer
-   │  git push
-   ▼
-GitHub repo ──── webhook ────► Jenkins (Docker container, port 8080)
-                                    │
-                          ┌─────────┴──────────┐
-                     docker build          kubectl apply
-                          │                     │
-                          ▼                     ▼
-                     Docker Hub        ┌─── Minikube cluster ───────────────────┐
-                   (image registry)    │                                        │
-                          │            │  nginx Ingress                         │
-                   image pull ────────►│  /      → client-service:80            │
-                                       │  /api   → server-service:5000          │
-                                       │                                        │
-                                       │  ┌─────────┐ ┌─────────┐ ┌─────────┐ │
-                                       │  │ client  │ │ server  │ │  mongo  │ │
-                                       │  │ deploy  │ │ deploy  │ │StatefulS│ │
-                                       │  │ ×2 pods │ │ ×2 pods │ │ ×1 pod  │ │
-                                       │  │  HPA    │ │  HPA    │ │  PVC    │ │
-                                       │  └─────────┘ └─────────┘ └─────────┘ │
-                                       └────────────────────────────────────────┘
-                                                         ▲
-                                                    socat :80
-                                                         │
-                                               EC2 public IP :80
-                                                         │
-                                                  Browser / User
-```
+![Architecture Diagram](mern_stack_architecture.png)
 
 Everything runs on a **single AWS EC2 instance** (t3.medium, Amazon Linux 2023).
 
@@ -119,8 +90,8 @@ MERN-DevOps/
 Before starting, have the following ready:
 
 - An AWS account with permission to launch EC2 instances
-- A Docker Hub account — create a PAT at **Account Settings → Personal access tokens** (Read, Write, Delete)
-- A GitHub account — create a PAT at **Settings → Developer settings → Personal access tokens → Tokens (classic)** with `repo` and `admin:repo_hook` scopes
+- A Docker Hub account - create a PAT at **Account Settings → Personal access tokens** (Read, Write, Delete)
+- A GitHub account - create a PAT at **Settings → Developer settings → Personal access tokens → Tokens (classic)** with `repo` and `admin:repo_hook` scopes
 
 ---
 
@@ -130,7 +101,7 @@ A full step-by-step deployment guide (14 steps, AWS Console through to browser a
 
 ### Quick summary of steps
 
-**1. AWS Console** — Launch an EC2 instance (t3.medium, Amazon Linux 2023, 20 GB gp3). Open inbound ports 22, 80, and 8080 in the security group.
+**1. AWS Console** - Launch an EC2 instance (t3.medium, Amazon Linux 2023, 20 GB gp3). Open inbound ports 22, 80, and 8080 in the security group.
 
 **2. SSH into EC2**
 ```bash
@@ -180,9 +151,9 @@ docker network connect minikube jenkins
 docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 ```
 
-**7. Configure Jenkins** — Open `http://<EC2_PUBLIC_IP>:8080`, install suggested plugins plus NodeJS Plugin and Docker Pipeline. Register the NodeJS tool as `NodeJS 24.14.1`, add your DockerHub PAT as `dockerhub-credentials`, and add your MongoDB URI as `mongo-uri`.
+**7. Configure Jenkins** - Open `http://<EC2_PUBLIC_IP>:8080`, install suggested plugins plus NodeJS Plugin and Docker Pipeline. Register the NodeJS tool as `NodeJS 24.14.1`, add your DockerHub PAT as `dockerhub-credentials`, and add your MongoDB URI as `mongo-uri`.
 
-**8. Create pipeline job** — New Item → Pipeline → Pipeline script from SCM → Git → your repo URL → Script Path: `Jenkinsfile`. Trigger with Build Now.
+**8. Create pipeline job** - New Item → Pipeline → Pipeline script from SCM → Git → your repo URL → Script Path: `Jenkinsfile`. Trigger with Build Now.
 
 **9. Forward port 80 to Minikube**
 ```bash
