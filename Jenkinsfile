@@ -74,6 +74,16 @@ pipeline {
             }
         }
 
+        stage('Setup Kubeconfig') {
+            steps {
+                sh '''
+                    kubectl config view --minify --flatten > /home/ec2-user/.kube/config-flat
+                    cp /home/ec2-user/.kube/config-flat /var/jenkins_home/.kube/config
+                    chown -R jenkins:jenkins /var/jenkins_home/.kube
+                '''
+            }
+        }
+
         stage('Deploy to Kubernetes') {
             steps {
                 sh '''
