@@ -77,6 +77,7 @@ pipeline {
         stage('Setup Kubeconfig') {
             steps {
                 sh '''
+                    mkdir -p /var/jenkins_home/.kube
                     cp /home/ec2-user/.kube/config-flat /var/jenkins_home/.kube/config
                     chown -R jenkins:jenkins /var/jenkins_home/.kube
                 '''
