@@ -21,7 +21,7 @@ The application is a full-stack MERN e-commerce store. This repository adds a co
 
 ## Architecture
 
-![Architecture Diagram](mern_stack_architecture.png)
+![Architecture Diagram](mern_stack_architecture.jpg)
 
 Everything runs on a **single AWS EC2 instance** (t3.medium, Amazon Linux 2023).
 
