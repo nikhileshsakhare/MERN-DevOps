@@ -75,6 +75,7 @@ pipeline {
         }
 
         stage('Setup Kubeconfig') {
+            agent { label 'built-in' }
             steps {
                 sh '''
                     kubectl config view --minify --flatten > /home/ec2-user/.kube/config-flat
